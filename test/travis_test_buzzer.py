@@ -33,7 +33,7 @@ class BuzzerTest(unittest.TestCase):
         with open("/dev/rtbuzzer0","r") as f:
             data = f.readline()
             #1234って入ってるか確認
-            self.assertEqual(data, "1234\n", "value does not written to rtbuzzer0"
+            self.assertEqual(data, "1234\n", "value does not written to rtbuzzer0")
 
 #このプログラムをこのファイルから実行したときのみ行う
 if __name__ == '__main__':
