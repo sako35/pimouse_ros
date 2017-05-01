@@ -6,6 +6,7 @@
 import rospy, unittest, rostest
 import rosnode
 import time
+from std_msgs.msg import UInt16
 #***End import***************************************
 
 #新たなクラスを作成する
@@ -21,6 +22,19 @@ class BuzzerTest(unittest.TestCase):
         #(リストに含まれるべき値、リスト、値がないときに出力する文字列)
         self.assertIn('/buzzer', nodes, "node does not exist")
         
+    def test_put_value(self):
+        #パブリッシャの作成(トピック、型)
+        pub = rospy.Publisher('/buzzer', UInt16)
+        for i in range(10):
+            #トピックに何を送るか
+            pub.publish(1234)
+            time.sleep(0.1)
+
+        with open("/dev/rtbuzzer0","r") as f:
+            data = f.readline()
+            #1234って入ってるか確認
+            self.assertEqual(data, "1234\n", "value does not written to rtbuzzer0"
+
 #このプログラムをこのファイルから実行したときのみ行う
 if __name__ == '__main__':
     #テスト対象のノードが立ち上がるのを待つ。3秒
